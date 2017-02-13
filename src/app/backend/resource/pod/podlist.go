@@ -52,8 +52,8 @@ type Pod struct {
 
 	// More info on pod status
 	PodStatus    PodStatus `json:"podStatus"`
-	PodIP        string
-	HostIP       string
+	PodIP        string        `json:podIP`
+	HostIP       string        `json:hostIP`
 
 	// Count of containers restarts.
 	RestartCount int32 `json:"restartCount"`
@@ -126,7 +126,6 @@ heapsterClient client.HeapsterClient) PodList {
 		podDetail := ToPod(&pod, metrics, warnings)
 		podDetail.Warnings = warnings
 		podList.Pods = append(podList.Pods, podDetail)
-
 	}
 	cumulativeMetrics, err := cumulativeMetricsPromises.GetMetrics()
 
