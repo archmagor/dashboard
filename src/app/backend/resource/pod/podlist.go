@@ -29,7 +29,7 @@ import (
 
 // ReplicationSetList contains a list of Pods in the cluster.
 type PodList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta          common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Pods.
 	Pods              []Pod           `json:"pods"`
@@ -47,25 +47,27 @@ type PodStatus struct {
 // it is Pod plus additional augmented data we can get from other sources
 // (like services that target it).
 type Pod struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta   common.ObjectMeta `json:"objectMeta"`
+	TypeMeta     common.TypeMeta   `json:"typeMeta"`
 
 	// More info on pod status
-	PodStatus PodStatus `json:"podStatus"`
+	PodStatus    PodStatus `json:"podStatus"`
+	PodIP        string
+	HostIP       string
 
 	// Count of containers restarts.
 	RestartCount int32 `json:"restartCount"`
 
 	// Pod metrics.
-	Metrics *common.PodMetrics `json:"metrics"`
+	Metrics      *common.PodMetrics `json:"metrics"`
 
 	// Pod warning events
-	Warnings []common.Event `json:"warnings"`
+	Warnings     []common.Event `json:"warnings"`
 }
 
 // GetPodList returns a list of all Pods in the cluster.
 func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
+nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
 	log.Print("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -79,7 +81,7 @@ func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient
 // GetPodList returns a list of all Pods in the cluster
 // reading required resource list once from the channels.
 func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient client.HeapsterClient) (*PodList, error) {
+heapsterClient client.HeapsterClient) (*PodList, error) {
 
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
@@ -96,7 +98,7 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 }
 
 func CreatePodList(pods []api.Pod, events []api.Event, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient client.HeapsterClient) PodList {
+heapsterClient client.HeapsterClient) PodList {
 
 	channels := &common.ResourceChannels{
 		PodMetrics: common.GetPodListMetricsChannel(heapsterClient, pods, 1),
