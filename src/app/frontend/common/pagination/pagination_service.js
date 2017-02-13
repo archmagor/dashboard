@@ -15,7 +15,8 @@
 /** Available numbers of rows that can be shown on resource list. */
 export const ROWS_LIMIT_OPTIONS = [10, 25, 50, 100];
 /** Defines max number of rows that will be displayed on the list before applying pagination. */
-export const DEFAULT_ROWS_LIMIT = 10;
+/** enlarge page_size to 20 */
+export const DEFAULT_ROWS_LIMIT = 20;
 
 /**
  * @final

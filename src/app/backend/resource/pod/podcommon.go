@@ -88,6 +88,8 @@ func ToPod(pod *api.Pod, metrics *common.MetricsByPod, warnings []common.Event) 
 		TypeMeta:     common.NewTypeMeta(common.ResourceKindPod),
 		PodStatus:    getPodStatus(*pod, warnings),
 		RestartCount: getRestartCount(*pod),
+		HostIP:	      pod.Status.HostIP,
+		PodIP:	      pod.Status.PodIP,
 	}
 
 	if metrics != nil && metrics.MetricsMap[pod.Namespace] != nil {

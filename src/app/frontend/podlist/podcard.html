@@ -60,9 +60,11 @@ limitations under the License.
         <md-tooltip>
           {{::$ctrl.getStartedAtTooltip($ctrl.pod.objectMeta.creationTimestamp)}}
         </md-tooltip>
-      </div>
+      </div>w
       <div ng-if="::!$ctrl.pod.objectMeta.creationTimestamp">-</div>
     </kd-resource-card-column>
+    <kd-resource-card-column>{{::$ctrl.pod.hostIP}}</kd-resource-card-column>
+      <kd-resource-card-column>{{::$ctrl.pod.podIP}}</kd-resource-card-column>
     <kd-resource-card-column ng-if="::$ctrl.showMetrics">
       <div ng-if="::$ctrl.hasCpuUsage(pod)">
         <kd-sparkline timeseries="::$ctrl.pod.metrics.cpuUsageHistory"

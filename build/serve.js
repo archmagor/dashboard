@@ -37,6 +37,7 @@ export const browserSyncInstance = browserSync.create();
  * @type {!Array<string>}
  */
 const backendDevArgs = [
+  `--kubeconfig=${conf.backend.kubeconfig}`,
   `--apiserver-host=${conf.backend.apiServerHost}`,
   `--port=${conf.backend.devServerPort}`,
   `--heapster-host=${conf.backend.heapsterServerHost}`,
